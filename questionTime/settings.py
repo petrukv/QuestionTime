@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'users',
+    'questions',
     'rest_framework',
     'rest_framework.authtoken',
     'djoser',
