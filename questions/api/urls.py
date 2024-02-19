@@ -11,4 +11,5 @@ urlpatterns = [
     path('questions/<slug:slug>/answer/', qv.AnswerCreateAPIView.as_view(), name='answer-create'),
     path('questions/<slug:slug>/answers/', qv.AnswerListAPIView.as_view(), name='answer-create'),
     path('answers/<uuid:uuid>/', qv.AnswerRUDAPIVie.as_view(), name='answer-detail'),
+    path('answers/<uuid:uuid>/like/', qv.AnswerLikeAPIView.as_view(), name='answer-like'),
 ]
