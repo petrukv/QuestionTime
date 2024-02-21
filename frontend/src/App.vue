@@ -1,13 +1,19 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-  </nav>
-  <router-view/>
+  <div id="nav">
+    <NavbarComponent />
+  </div>
 </template>
 
-<style>
-body {
-        font-family: "Noto Sans JP", sans-serif;
-        font-weight: 300;
-      }
+<script>
+import NavbarComponent from "@/components/Navbar.vue";
+export default {
+  name: "App",
+  components: {
+    NavbarComponent
+  }
+}
+</script>
+
+<style scoped>
+/* App component styles */
 </style>
