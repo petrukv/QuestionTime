@@ -1,7 +1,8 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light my-navbar">
     <div class="container">
-      <a class="navbar-brand" href="#">Navbar</a>
+      <router-link class="navbar-brand" :to="{ name:'home' } "> QuestionTime </router-link>
+
       <button
         class="navbar-toggler"
         type="button"
@@ -17,7 +18,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <button class="btn btn-outline-success-secondary" @click="logout">Logout</button>
+            <button class="btn btn-logout btn-outline-success-secondary" @click="logout">Logout</button>
           </li>
         </ul>
       </div>
@@ -55,3 +56,22 @@ export default {
   }
 };
 </script>
+
+<style>
+.my-navbar {
+  border-bottom: 1px solid #ddd;
+}
+
+.navbar-brand {
+  font-weight: bold;
+  font-size: 150%;
+}
+
+.navbar-brand:hover {
+  color: #dc3545 !important;
+}
+
+.btn-logout:hover {
+  color: #dc3545 !important;
+}
+</style>
