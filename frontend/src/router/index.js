@@ -7,11 +7,7 @@ const routes = [
     name: 'home',
     component: HomeView
   },
-  {
-    path: '/new-one',
-    name: 'home-two',
-    component: HomeView
-  }
+
 
    // {
   //   path: '/about',
