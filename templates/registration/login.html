@@ -1,21 +1,55 @@
 {% extends "auth_layout.html" %}
 {% load widget_tweaks %}
 
+<script>
+async function loginUser(event) {
+    event.preventDefault();
+
+    var username = document.getElementById("username").value;
+    var password = document.getElementById("password").value;
+    console.log('a')
+    try {
+        console.log("s")
+        const response = await fetch("http://127.0.0.1:8000/auth/token/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ username: username, password: password })
+        });
+
+        if (!response.ok) {
+            throw new Error('Login failed');
+        }
+
+        const data = await response.json();
+        const authToken = data.auth_token;
+
+        localStorage.setItem('authToken', authToken);
+
+        console.log('Token:', authToken);
+        window.location.href = '/';
+    } catch (error) {
+        console.error('Login failed:', error.message);
+    }
+}
+</script>
+
 {% block content %}
 <h1 class="text-light">QuestionTime</h1>
 <p class="text-light mb-4">Share Your Knowledge!</p>
 <div class="form-container">
-    <form method="POST">
+    <form id="loginForm" method="POST" onsubmit="loginUser(event)">
         {% csrf_token %}
 
         <div class="form-floating mb-3">
-          {% render_field form.username class="form-control" id="floatingUsername" placeholder="Username" %}
-          <label for="floatingUsername">Username</label>
+            {% render_field form.username class="form-control" id="username" placeholder="Username" %}
+            <label for="username">Username</label>
         </div>
 
         <div class="form-floating mb-3">
-          {% render_field form.password class="form-control" id="floatingPassword" placeholder="Password" %}
-          <label for="floatingPassword">Password</label>
+            {% render_field form.password class="form-control" id="password" placeholder="Password" %}
+            <label for="password">Password</label>
         </div>
 
         {% if form.errors %}
@@ -27,12 +61,8 @@
         {% endif %}
 
         <div class="d-grid gap-2">
-          <button type="submit" class="btn btn-lg btn-primary">Login</button>
+            <button type="submit" class="btn btn-lg btn-primary">Login</button>
         </div>
     </form>
-
-    {% comment %} <p class="text-light mt-4">
-      Or <a href="{% url 'django_registration_register' %}" class="auth-link">Create an Account</a>
-    </p>  {% endcomment %}
 </div>
 {% endblock %}
