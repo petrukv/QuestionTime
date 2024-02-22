@@ -8,6 +8,7 @@ from core.models import TimeStampedModel
 
 class Question(TimeStampedModel):
     uuid = models.UUIDField(default=uuid_lib.uuid4, editable=False)
+    other_uuid = models.UUIDField(default=uuid_lib.uuid4, editable=False)  # Змінено назву поля
     content = models.CharField(max_length=240)
     slug = models.SlugField(max_length=255, unique=True)
     author = models.ForeignKey(
@@ -16,6 +17,7 @@ class Question(TimeStampedModel):
 
     def __str__(self):
         return self.content
+
 
 
 class Answer(TimeStampedModel):
