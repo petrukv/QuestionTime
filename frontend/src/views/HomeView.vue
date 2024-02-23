@@ -5,7 +5,10 @@
         <div class="card shadow p-2 mb-3 bg-body rounded">
           <div class="card-body">
             <p class="mb-0">Posted by: <span class="question-author">{{ question.author }}</span></p>
-            <h1>{{ question.content }} </h1>
+            <h2><router-link :to="{name:'question', params: {slug: question.slug}}">
+              {{ question.content }}
+              </router-link>
+            </h2>
             <p class="mb-0">Answers: {{ question.answers_count }}</p>
           </div>
         </div>
@@ -57,7 +60,7 @@ export default {
     }
   },
   created() {
-    console.log('created lifecycle hook')
+    document.title = 'QuestionTime';
     this.getQuestions();
 
   }
