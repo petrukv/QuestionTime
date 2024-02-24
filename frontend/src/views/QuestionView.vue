@@ -4,6 +4,20 @@
             <h1>{{ question.content }}</h1>
             <p class="mb-0">Posted by: <span class="author-name">{{ question.author }}</span></p>
             <p>{{ question.created_at }}</p>
+            <div v-if="userHasAnswered">
+                <p class="answer-added">You have written an answer!</p>
+            </div>
+            <div v-else-if="showForm">
+                <form @submit.prevent="onSubmit">
+                    <p>Answer the question</p>
+                    <textarea v-model="newAnswerBody" class='form-control' placeholder="Share your knowledge!" rows="10"></textarea>
+                    <button type="submit" class="btn btn-success my-3">Submit your answer</button>
+                </form>
+                <p v-if="error" class="error mt-2">{{ error }}</p>
+            </div>
+            <div v-else>
+                <button class="btn btn-success" @click="showForm = true">Answer The Question</button>
+            </div>
             <hr>
         </div>
         <div v-else>
@@ -45,6 +59,10 @@ export default {
             answers: [],
             next: null,
             loadingAnswers: false,
+            userHasAnswered: false,
+            showForm: false,
+            newAnswerBody: null,
+            error: null,
         };
     },
     methods: {
@@ -61,6 +79,7 @@ export default {
                     }
                 });
                 this.question = response.data;
+                this.userHasAnswered = response.data.user_has_answered
                 this.setPageTitle(response.data.content)
             } catch(error) {
                 console.log(error.response);
@@ -95,7 +114,32 @@ export default {
                 console.log(error.response);
                 alert(error.response.statusText);
             }
+        },
+
+        async onSubmit() {
+            if(!this.newAnswerBody) {
+                this.error ="You can't send an empty answer!"
+                return
+            }
+            const endpoint = `http://localhost:8000/api/v1/questions/${this.slug}/answer/`;
+            try {
+                const response = await axios.post( endpoint, {body: this.newAnswerBody},
+                    {headers: { 'Authorization': 'token 44878bbd1715cd56ffe65543f775be71e7bf0635'}});
+                this.answers.unshift(response.data);
+                this.newAnswerBody = null;
+                this.showForm = false;
+                this.userHasAnswered = true;
+
+                if (this.error){
+                    this.error = null;
+                }
+
+            } catch(error) {
+                console.log(error.response);
+                alert(error.response.statusText);
+            }
         }
+
     },
     created() {
         this.getQuestionData();
@@ -113,6 +157,11 @@ export default {
 
 .error{
     color: red
+}
+
+.answer-added{
+    font-weight: bold;
+    color: green
 }
 
 </style>
