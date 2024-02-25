@@ -4,6 +4,7 @@
             <h1>{{ question.content }}</h1>
             <p class="mb-0">Posted by: <span class="author-name">{{ question.author }}</span></p>
             <p>{{ question.created_at }}</p>
+            <QuestionActions v-if="isQuestionAuthor" :slug="question.slug"></QuestionActions>
             <div v-if="userHasAnswered">
                 <p class="answer-added">You have written an answer!</p>
             </div>
@@ -38,6 +39,7 @@
 
 <script>
 import AnswerComponent from '@/components/Answer.vue';
+import QuestionActions from '@/components/QuestionActions.vue';
 import axios from 'axios';
 
 export default {
@@ -51,6 +53,7 @@ export default {
 
     components:{
         AnswerComponent,
+        QuestionActions,
     },
 
     data() {
@@ -63,9 +66,21 @@ export default {
             showForm: false,
             newAnswerBody: null,
             error: null,
+            requestUser: null
         };
     },
+
+    computed: {
+        isQuestionAuthor() {
+            return this.question.author == this.requestUser
+        }
+    },
+
     methods: {
+        setRequestUser () {
+            this.requestUser = window.localStorage.getItem('username');
+        },
+
         setPageTitle(title){
             document.title = title
         },
@@ -143,7 +158,8 @@ export default {
     },
     created() {
         this.getQuestionData();
-        this.getQuestionAnswers()
+        this.getQuestionAnswers();
+        this.setRequestUser()
     }
 }
 </script>
