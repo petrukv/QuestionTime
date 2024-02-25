@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
+import QuestionEditor from '../views/QuestionEditor.vue';
 import QuestionView from '../views/QuestionView.vue';
 
 const routes = [
@@ -9,10 +10,15 @@ const routes = [
     component: HomeView
   },
   {
-    path: '/question/:slug', // Визначаємо динамічний шлях з параметром :slug
+    path: '/question/:slug',
     name: 'question',
     component: QuestionView,
-    props: true // Вмикаємо передачу пропсів через параметри маршруту
+    props: true
+  },
+  {
+    path: '/ask/',
+    name: 'question-editor',
+    component: QuestionEditor,
   }
 ];
 

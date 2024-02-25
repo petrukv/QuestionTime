@@ -17,6 +17,9 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto">
+          <li class="nav-item m2-1">
+            <router-link class="btn btn-danger" :to="{ name:'question-editor' } "> Ask a question </router-link>
+          </li>
           <li class="nav-item">
             <button class="btn btn-logout btn-outline-success-secondary" @click="logout">Logout</button>
           </li>

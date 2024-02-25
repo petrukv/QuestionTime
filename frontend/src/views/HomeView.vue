@@ -5,7 +5,7 @@
         <div class="card shadow p-2 mb-3 bg-body rounded">
           <div class="card-body">
             <p class="mb-0">Posted by: <span class="question-author">{{ question.author }}</span></p>
-            <h2><router-link :to="{name:'question', params: {slug: question.slug}}">
+            <h2><router-link :to="{name:'question', params: {slug: question.slug}}" class="question-link">
               {{ question.content }}
               </router-link>
             </h2>
@@ -76,4 +76,9 @@ export default {
   color: #dc3545;
 }
 
+.question-link {
+  font-weight: 400;
+  color: black;
+  text-decoration: none;
+}
 </style>
