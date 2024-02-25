@@ -13,6 +13,13 @@
 import { axios } from "@/common/api.service.js";
 export default {
     name: 'QuestionEditor',
+    props: {
+        slug: {
+            type: String,
+            required: false,
+        }
+    },
+
     data() {
         return {
             questionBody: null,
@@ -24,6 +31,10 @@ export default {
         async performNetworkRequest() {
             let endpoint = "http://localhost:8000/api/v1/questions/";
             let method = 'POST';
+            if (this.slug !== undefined && this.slug !== "") {
+                endpoint += `${this.slug}/`;
+                method = 'PUT';
+            }
             try {
                 const response = await axios({
                     method: method,
@@ -48,7 +59,29 @@ export default {
             } else {
                 this.performNetworkRequest();
             }
-        }
-    }
+        },
+    },
+
+    created() {
+        document.title = 'Editor - QuestionTime'
+    },
+
+    beforeRouteEnter(to, from, next) {
+    if (to.params.slug !== undefined && to.params.slug !== "") {
+        const endpoint = `http://localhost:8000/api/v1/questions/${to.params.slug}/`;
+        axios.get(endpoint, { headers: { 'Authorization': 'token 44878bbd1715cd56ffe65543f775be71e7bf0635' }})
+            .then(response => {
+                next(vm => {
+                    vm.questionBody = response.data.content;
+                });
+            })
+            .catch(error => {
+                console.log(error);
+                next();
+            });
+    } else {
+        next();
+    }}
 }
+
 </script>
