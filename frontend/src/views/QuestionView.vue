@@ -27,7 +27,9 @@
         <div v-if="question" >
             <AnswerComponent v-for="answer in answers"
             :key="answer.uuid"
-            :answer="answer" />
+            :answer="answer"
+            :requestUser="requestUser"
+            />
         </div>
 
         <div class="my-4">
