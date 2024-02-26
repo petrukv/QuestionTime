@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import AnswerEditor from '../views/AnswerEditor.vue';
 import HomeView from '../views/HomeView.vue';
+import NotFound from '../views/NotFound.vue';
 import QuestionEditor from '../views/QuestionEditor.vue';
 import QuestionView from '../views/QuestionView.vue';
 
@@ -25,8 +26,13 @@ const routes = [
   {
     path: '/answer/:uuid',
     name: 'answer-editor',
-    component: AnswerEditor ,
+    component: AnswerEditor,
     props: true
+  },
+  {
+    path: '/:catchAll(.*)',
+    name: 'page-not-found',
+    component: NotFound,
   }
 ];
 
