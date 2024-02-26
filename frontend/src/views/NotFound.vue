@@ -11,6 +11,9 @@ export default {
         return {
             message: "404 - Not Found"
         }
+    },
+    created() {
+        document.title = "404 - Not Found"
     }
 }
 </script>
