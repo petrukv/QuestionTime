@@ -29,6 +29,7 @@
             :key="answer.uuid"
             :answer="answer"
             :requestUser="requestUser"
+            @delete-answer="deleteAnswer"
             />
         </div>
 
@@ -155,7 +156,20 @@ export default {
                 console.log(error.response);
                 alert(error.response.statusText);
             }
-        }
+        },
+
+        async deleteAnswer(answer) {
+      // delete a given answer from the answers array and make a delete request to the REST API
+            const endpoint = `/api/v1/answers/${answer.uuid}/`;
+            try {
+                await axios.delete(endpoint, {headers: { 'Authorization': 'token 44878bbd1715cd56ffe65543f775be71e7bf0635'}});
+                this.answers.splice(this.answers.indexOf(answer), 1);
+                this.userHasAnswered = false;
+            } catch (error) {
+                console.log(error.response);
+                alert(error.response.statusText);
+            }
+        },
 
     },
     created() {

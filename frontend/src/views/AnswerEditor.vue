@@ -47,7 +47,6 @@
         },
     },
     async beforeRouteEnter(to, from, next) {
-      // get the answer's data from the REST API and set two data properties for the component
         const endpoint = `/api/v1/answers/${to.params.uuid}/`;
         try {
         const response = await axios.get(endpoint);
